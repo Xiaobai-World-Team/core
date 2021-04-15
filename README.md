@@ -1,3 +1,8 @@
 # browser-based operating system
 
-2021.
+### Get Started
+
+```bash
+npm i
+npm run dev
+```
