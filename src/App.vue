@@ -9,15 +9,20 @@
   </div>
   <!-- Taskbar -->
   <div id="xiaobai-world-taskbar"></div>
+  <!-- ContextMenu -->
+  <contextMenu />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { IApplication } from "./types/application";
+import contextMenu from "./components/context-menu.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
-  components: {},
+  components: {
+    contextMenu,
+  },
   setup() {
     /**
      * All applications
