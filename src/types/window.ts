@@ -1,3 +1,13 @@
+import { IContextMenuItem } from "./context-menu";
+
+Object.defineProperty(window, 'xiaobaiApi', { value: {} })
+declare global {
+  interface Window {
+    /** Xiaobai API */
+    xiaobaiApi: IXiaobaiApi;
+  }
+}
+
 
 /**
  * Type of background
@@ -20,4 +30,10 @@ export interface IWindow {
     /** inline css */
     css: string,
   }
+}
+
+/** Xiaobai API */
+export interface IXiaobaiApi {
+  /* Show Popup Menu */
+  TrackPopupMenu(menus: IContextMenuItem[]): void
 }

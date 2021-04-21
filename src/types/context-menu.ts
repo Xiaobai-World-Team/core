@@ -12,8 +12,10 @@ export interface IContextMenuItem {
    * Usually positioned to the right to display shortcuts
    */
   describe?: string;
+  /** callback */
+  callback(): any;
   /** sub menu  */
-  child?: IContextMenuItem[]
+  child?: IContextMenuItem[],
 }
 
 /**

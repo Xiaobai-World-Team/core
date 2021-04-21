@@ -37,6 +37,22 @@ export default defineComponent({
       activeedApplicationHandle,
     };
   },
+  mounted() {
+    document
+      .querySelector("#xiaobai-world-taskbar")
+      ?.addEventListener("contextmenu", (event) => {
+        event.preventDefault()
+        window.xiaobaiApi.TrackPopupMenu([
+          {
+            text: "AAAAAAAA",
+            disable: true,
+            callback() {
+              alert(123);
+            },
+          },
+        ]);
+      });
+  },
 });
 </script>
 
