@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { IApplication } from "./types/application";
-import contextMenu from "./components/context-menu.vue";
+import contextMenu from "./kernel/context-menus/context-menu.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
@@ -41,7 +41,7 @@ export default defineComponent({
     document
       .querySelector("#xiaobai-world-taskbar")
       ?.addEventListener("contextmenu", (event) => {
-        event.preventDefault()
+        event.preventDefault();
         window.xiaobaiApi.TrackPopupMenu([
           {
             text: "AAAAAAAA",

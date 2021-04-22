@@ -1,6 +1,6 @@
 
 import { ref } from "@vue/reactivity";
-import { IContextMenu, IContextMenuItem } from "../types/context-menu";
+import { IContextMenu, IContextMenuItem } from "./types";
 
 
 export const contextMenus = ref<IContextMenu>({

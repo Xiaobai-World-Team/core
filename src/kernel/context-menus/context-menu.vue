@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import { contextMenus } from "../kernel/context-menus";
-import { IContextMenuItem } from "../types/context-menu";
+import { contextMenus } from ".";
+import { IContextMenuItem } from "./types";
 export default {
   setup() {
     return {

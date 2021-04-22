@@ -1,4 +1,4 @@
-import { IContextMenuItem } from "./context-menu";
+import { IContextMenuItem } from "../kernel/context-menus/types";
 
 Object.defineProperty(window, 'xiaobaiApi', { value: {} })
 declare global {
