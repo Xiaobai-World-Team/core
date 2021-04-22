@@ -9,19 +9,23 @@
   </div>
   <!-- Taskbar -->
   <div id="xiaobai-world-taskbar"></div>
-  <!-- ContextMenu -->
+  <!-- Context Menu -->
   <contextMenu />
+  <!-- Login Modal -->
+  <login />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { IApplication } from "./types/application";
 import contextMenu from "./kernel/context-menus/context-menu.vue";
+import login from "./kernel/auth/login.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
   components: {
     contextMenu,
+    login,
   },
   setup() {
     /**
