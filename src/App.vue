@@ -5,7 +5,9 @@
       The 1# desktop,
       meaning there could be multiple desktops in the future.
     -->
-    <div class="xiaobai-workd-desktop"></div>
+    <div id="xiaobai-workd-desktop-wrapper">
+      <desktop order="1" />
+    </div>
   </div>
   <!-- Taskbar -->
   <div id="xiaobai-world-taskbar"></div>
@@ -20,12 +22,14 @@ import { defineComponent, ref } from "vue";
 import { IApplication } from "./types/application";
 import contextMenu from "./kernel/context-menus/context-menu.vue";
 import login from "./kernel/auth/login.vue";
+import desktop from "./kernel/desktop/desktop.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
   components: {
     contextMenu,
     login,
+    desktop,
   },
   setup() {
     /**
@@ -71,6 +75,7 @@ body {
   height: 100vh;
   border: solid 12px rgb(0, 182, 167);
   box-sizing: border-box;
+  display: flex;
 }
 #xiaobai-world-taskbar {
   position: fixed;
@@ -81,5 +86,8 @@ body {
   width: 50vw;
   transform: translateX(-50%);
   border-radius: 12px;
+}
+#xiaobai-workd-desktop-wrapper {
+  flex: 1 1 0;
 }
 </style>
