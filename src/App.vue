@@ -15,6 +15,8 @@
   <contextMenu />
   <!-- Login Modal -->
   <login />
+  <!-- Windows -->
+  <windows />
 </template>
 
 <script lang="ts">
@@ -23,6 +25,7 @@ import { IApplication } from "./types/application";
 import contextMenu from "./kernel/context-menus/context-menu.vue";
 import login from "./kernel/auth/login.vue";
 import desktop from "./kernel/desktop/desktop.vue";
+import windows from "./kernel/windows/windows.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
@@ -30,6 +33,7 @@ export default defineComponent({
     contextMenu,
     login,
     desktop,
+    windows
   },
   setup() {
     /**
