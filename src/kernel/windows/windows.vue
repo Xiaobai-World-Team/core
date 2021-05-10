@@ -16,7 +16,10 @@
     <div class="xiaobai-window-content">
       <pre>{{ window }}</pre>
     </div>
-    <div xiaobai-resize-trigger class="toolbar">Windows</div>
+    <div xiaobai-resize-trigger class="toolbar">
+      <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
+      {{ window.title }}
+    </div>
     <div xiaobai-resize-trigger class="e"></div>
     <div xiaobai-resize-trigger class="s"></div>
     <div xiaobai-resize-trigger class="w"></div>
@@ -196,11 +199,12 @@ export default defineComponent({
   background: #fff;
   border-radius: 1em;
   overflow: hidden;
-  border: solid 1px #aaa;
+  border: solid 1px #bbb;
   padding-top: 50px;
   display: flex;
+  box-shadow: 0 1em 1em 0 rgba(0, 0, 0, 0.1);
   &.xiaobaiWindowActive {
-    z-index: 99999999999;
+    z-index: 9999999;
     box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.6);
   }
   > .xiaobai-window-content {
@@ -210,7 +214,7 @@ export default defineComponent({
   > [xiaobai-resize-trigger] {
     position: absolute;
     box-sizing: border-box;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.6);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
     opacity: 0;
   }
   > [xiaobai-resize-trigger].toolbar {
@@ -225,6 +229,13 @@ export default defineComponent({
     justify-content: center;
     cursor: default;
     user-select: none;
+    color: #555;
+    font-weight: bold;
+    .xiaobai-window-toolbar-icon {
+      width: 22px;
+      height: 22px;
+      margin-right: 6px;
+    }
   }
   > [xiaobai-resize-trigger].e {
     right: -6px;

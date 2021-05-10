@@ -6,12 +6,14 @@ import { ref } from "@vue/reactivity";
  * each window be the body's directly child
  * */
 interface IWindow {
+  title: string,
   id: string;
   x: number
   y: number
   width: number
   height: number
   active: boolean
+  icon: string
 }
 
 export const windows = ref<IWindow[]>([])
@@ -27,7 +29,9 @@ windows.value.push({
   y: 160,
   width: 300,
   height: 300,
-  active: false
+  active: false,
+  title: "Calculator",
+  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/calculator.svg'
 })
 
 windows.value.push({
@@ -36,5 +40,7 @@ windows.value.push({
   y: 200,
   width: 500,
   height: 200,
-  active: false
+  active: false,
+  title: "Notepad",
+  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg'
 })

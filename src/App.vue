@@ -90,6 +90,7 @@ body {
   width: 50vw;
   transform: translateX(-50%);
   border-radius: 12px;
+  z-index: 9999999999;
 }
 #xiaobai-workd-desktop-wrapper {
   flex: 1 1 0;
