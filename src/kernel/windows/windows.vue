@@ -4,17 +4,19 @@
     :id="window.id"
     :key="window.id"
     class="xiaobai-window-resize"
+    :class="{ xiaobaiWindowActive: activeWindowsId === window.id }"
     :style="{
       position: 'fixed',
       left: window.x + 'px',
       top: window.y + 'px',
       width: window.width + 'px',
       height: window.height + 'px',
-      border: 'solid 2px red',
     }"
   >
-    <pre>{{ window }}</pre>
-    <div xiaobai-resize-trigger class="toolbar"></div>
+    <div class="xiaobai-window-content">
+      <pre>{{ window }}</pre>
+    </div>
+    <div xiaobai-resize-trigger class="toolbar">Windows</div>
     <div xiaobai-resize-trigger class="e"></div>
     <div xiaobai-resize-trigger class="s"></div>
     <div xiaobai-resize-trigger class="w"></div>
@@ -27,12 +29,13 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { windows } from "./windows";
+import { activeWindowsId, windows } from "./windows";
 
 export default defineComponent({
   setup() {
     return {
-      windows: windows,
+      windows,
+      activeWindowsId,
     };
   },
   mounted() {
@@ -40,6 +43,31 @@ export default defineComponent({
       ev.preventDefault();
     }
 
+    function setTopWindow(id: string) {
+      activeWindowsId.value = id;
+    }
+
+    document.addEventListener("mousedown", (ev) => {
+      let node = <Element>ev.target;
+      if (node instanceof Element === false) {
+        return;
+      }
+      if (Array.from(node.classList).includes("xiaobai-window-resize")) {
+        setTopWindow(node.id);
+        return;
+      }
+      while (node !== null) {
+        node = <Element>node.parentNode;
+        if (Array.from(node.classList).includes("xiaobai-window-resize")) {
+          setTopWindow(node.id);
+          break;
+        }
+      }
+    });
+
+    /**
+     * resize and scale
+     */
     document.addEventListener("mousedown", function (ev) {
       if (ev.target === null) {
         return;
@@ -164,95 +192,111 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.xiaobai-window-resize > [xiaobai-resize-trigger] {
-  position: absolute;
-  box-sizing: border-box;
-  border: solid 1px rgba(0, 0, 0, 0.6);
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].toolbar {
-  height: 30px;
-  width: 100%;
-  background: red;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].e {
-  right: -6px;
-  top: 0;
-  bottom: 0;
-  width: 8px;
-  background: rgba(255, 255, 255, 0.5);
-  cursor: e-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].s {
-  left: 0;
-  bottom: -6px;
-  right: 0;
-  height: 8px;
-  background: rgba(2, 208, 255, 0.5);
-  cursor: s-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].w {
-  left: -6px;
-  bottom: 0;
-  top: 0;
-  width: 8px;
-  background: rgba(255, 27, 50, 0.5);
-  cursor: w-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].n {
-  left: 0;
-  top: -6px;
-  right: 0;
-  height: 8px;
-  background: rgba(255, 255, 0, 0.4);
-  cursor: n-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].ne,
-.xiaobai-window-resize > [xiaobai-resize-trigger].nw,
-.xiaobai-window-resize > [xiaobai-resize-trigger].sw,
-.xiaobai-window-resize > [xiaobai-resize-trigger].se {
-  border-radius: 50% 50%;
-  width: 14px;
-  height: 14px;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].ne {
-  right: -7px;
-  top: -7px;
+.xiaobai-window-resize {
   background: #fff;
-  z-index: 2;
-  cursor: ne-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].nw {
-  left: -7px;
-  top: -7px;
-  background: #fff;
-  z-index: 2;
-  cursor: nw-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].sw {
-  left: -7px;
-  bottom: -7px;
-  background: #fff;
-  z-index: 2;
-  cursor: sw-resize;
-}
-
-.xiaobai-window-resize > [xiaobai-resize-trigger].se {
-  right: -7px;
-  bottom: -7px;
-  background: #fff;
-  z-index: 2;
-  cursor: se-resize;
+  border-radius: 1em;
+  overflow: hidden;
+  border: solid 1px #aaa;
+  padding-top: 50px;
+  display: flex;
+  &.xiaobaiWindowActive {
+    z-index: 99999999999;
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.6);
+  }
+  > .xiaobai-window-content {
+    flex: 1 1 0;
+    overflow: auto;
+  }
+  > [xiaobai-resize-trigger] {
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+  }
+  > [xiaobai-resize-trigger].toolbar {
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    user-select: none;
+  }
+  > [xiaobai-resize-trigger].e {
+    right: -6px;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: e-resize;
+  }
+  > [xiaobai-resize-trigger].s {
+    left: 0;
+    bottom: -6px;
+    right: 0;
+    height: 8px;
+    background: rgba(2, 208, 255, 0.5);
+    cursor: s-resize;
+  }
+  > [xiaobai-resize-trigger].w {
+    left: -6px;
+    bottom: 0;
+    top: 0;
+    width: 8px;
+    background: rgba(255, 27, 50, 0.5);
+    cursor: w-resize;
+  }
+  > [xiaobai-resize-trigger].n {
+    left: 0;
+    top: -6px;
+    right: 0;
+    height: 8px;
+    background: rgba(255, 255, 0, 0.4);
+    cursor: n-resize;
+  }
+  > [xiaobai-resize-trigger].ne {
+    border-radius: 50% 50%;
+    width: 14px;
+    height: 14px;
+    right: -7px;
+    top: -7px;
+    background: #fff;
+    z-index: 2;
+    cursor: ne-resize;
+  }
+  > [xiaobai-resize-trigger].nw {
+    border-radius: 50% 50%;
+    width: 14px;
+    height: 14px;
+    left: -7px;
+    top: -7px;
+    background: #fff;
+    z-index: 2;
+    cursor: nw-resize;
+  }
+  > [xiaobai-resize-trigger].sw {
+    border-radius: 50% 50%;
+    width: 14px;
+    height: 14px;
+    left: -7px;
+    bottom: -7px;
+    background: #fff;
+    z-index: 2;
+    cursor: sw-resize;
+  }
+  > [xiaobai-resize-trigger].se {
+    border-radius: 50% 50%;
+    width: 14px;
+    height: 14px;
+    right: -7px;
+    bottom: -7px;
+    background: #fff;
+    z-index: 2;
+    cursor: se-resize;
+  }
 }
 </style>
