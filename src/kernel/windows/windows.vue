@@ -61,6 +61,9 @@ export default defineComponent({
       }
       while (node !== null) {
         node = <Element>node.parentNode;
+        if (node.nodeName === "BODY") {
+          break;
+        }
         if (Array.from(node.classList).includes("xiaobai-window-resize")) {
           setTopWindow(node.id);
           break;

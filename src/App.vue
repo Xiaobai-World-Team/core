@@ -10,7 +10,7 @@
     </div>
   </div>
   <!-- Taskbar -->
-  <div id="xiaobai-world-taskbar"></div>
+  <taskbar />
   <!-- Context Menu -->
   <contextMenu />
   <!-- Login Modal -->
@@ -26,6 +26,7 @@ import contextMenu from "./kernel/context-menus/context-menu.vue";
 import login from "./kernel/auth/login.vue";
 import desktop from "./kernel/desktop/desktop.vue";
 import windows from "./kernel/windows/windows.vue";
+import taskbar from "./kernel/taskbar/taskbar.vue";
 
 export default defineComponent({
   name: "XiaobaiWorld",
@@ -33,7 +34,8 @@ export default defineComponent({
     contextMenu,
     login,
     desktop,
-    windows
+    windows,
+    taskbar
   },
   setup() {
     /**
@@ -81,17 +83,7 @@ body {
   box-sizing: border-box;
   display: flex;
 }
-#xiaobai-world-taskbar {
-  position: fixed;
-  left: 50%;
-  bottom: 1.5em;
-  height: 70px;
-  background: rgb(40, 143, 112);
-  width: 50vw;
-  transform: translateX(-50%);
-  border-radius: 12px;
-  z-index: 9999999999;
-}
+
 #xiaobai-workd-desktop-wrapper {
   flex: 1 1 0;
 }
