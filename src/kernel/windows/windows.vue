@@ -235,6 +235,7 @@ export default defineComponent({
       width: 22px;
       height: 22px;
       margin-right: 6px;
+      pointer-events: none;
     }
   }
   > [xiaobai-resize-trigger].e {
