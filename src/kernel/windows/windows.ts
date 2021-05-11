@@ -14,6 +14,14 @@ interface IWindow {
   active: boolean
   visible: boolean
   icon: string
+  animation: boolean
+  /** before the window is maximized,save the window size for later recovery */
+  previousWindowSize?: {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  }
 }
 
 export const windows = ref<IWindow[]>([])
@@ -32,6 +40,7 @@ windows.value.push({
   active: false,
   title: "Calculator",
   visible: true,
+  animation: true,
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/calculator.svg'
 })
 
@@ -43,6 +52,7 @@ windows.value.push({
   height: 200,
   active: false,
   visible: true,
+  animation: true,
   title: "Notepad",
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg'
 })

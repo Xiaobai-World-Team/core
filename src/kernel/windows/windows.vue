@@ -3,10 +3,11 @@
     v-for="(window, idx) in windows"
     :id="window.id"
     :key="window.id"
-    class="xiaobai-window-resize"
+    class="xiaobai-window-wrapper"
     v-show="window.visible"
     :class="{
       xiaobaiWindowActive: activeWindowsId === window.id,
+      animation: window.animation,
     }"
     :style="{
       position: 'fixed',
@@ -20,14 +21,18 @@
       <pre>{{ window }}</pre>
     </div>
 
-    <div xiaobai-resize-trigger="move" class="xiaobai-window-toolbar">
+    <div
+      xiaobai-resize-trigger="move"
+      @dblclick="max(window.id)"
+      class="xiaobai-window-toolbar"
+    >
       <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
       {{ window.title }}
     </div>
-    <div xiaobai-resize-trigger="move">
-      <div class="close" title="Close" @click="close(idx)"></div>
-      <div class="min" title="Min" @click="min(idx)"></div>
-      <div class="max" title="Max" @click="max(idx)"></div>
+    <div xiaobai-resize-trigger="move" @dblclick="max(window.id)">
+      <div class="close" title="Close" @click="close(window.id)"></div>
+      <div class="min" title="Min" @click="min(window.id)"></div>
+      <div class="max" title="Max" @click="max(window.id)"></div>
     </div>
     <div xiaobai-resize-trigger="e"></div>
     <div xiaobai-resize-trigger="s"></div>
@@ -41,18 +46,44 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { taskbarWidth } from "../const";
 import { activeWindowsId, windows } from "./windows";
 
 export default defineComponent({
   setup() {
-    function close(idx: number) {
+    function close(id: string) {
+      const idx = windows.value.findIndex((window) => window.id === id);
       windows.value.splice(idx, 1);
     }
-    function min(idx: number) {
+    function min(id: string) {
+      const idx = windows.value.findIndex((window) => window.id === id);
       windows.value[idx].visible = false;
     }
-    function max(idx: number) {
-      // windows.value[idx].fullscreen = !windows.value[idx].fullscreen;
+    function max(id: string) {
+      const idx = windows.value.findIndex((window) => window.id === id);
+      const obj = windows.value[idx];
+
+      if (obj.previousWindowSize) {
+        obj.x = obj.previousWindowSize.x;
+        obj.y = obj.previousWindowSize.y;
+        obj.width = obj.previousWindowSize.width;
+        obj.height = obj.previousWindowSize.height;
+        obj.previousWindowSize = undefined;
+        return;
+      }
+
+      // first save the window size
+      obj.previousWindowSize = {
+        x: obj.x,
+        y: obj.y,
+        width: obj.width,
+        height: obj.height,
+      };
+
+      obj.x = taskbarWidth.value;
+      obj.y = 0;
+      obj.width = window.innerWidth - taskbarWidth.value;
+      obj.height = window.innerHeight;
     }
     return {
       close,
@@ -71,12 +102,15 @@ export default defineComponent({
       activeWindowsId.value = id;
     }
 
-    document.addEventListener("mousedown", (ev) => {
+    /**
+     * Switch windows size when dobule clicking title bar
+     */
+    document.addEventListener("dbclick", (ev) => {
       let node = <Element>ev.target;
       if (node instanceof Element === false) {
         return;
       }
-      if (Array.from(node.classList).includes("xiaobai-window-resize")) {
+      if (Array.from(node.classList).includes("xiaobai-window-wrapper")) {
         setTopWindow(node.id);
         return;
       }
@@ -85,7 +119,7 @@ export default defineComponent({
         if (node.nodeName === "BODY") {
           break;
         }
-        if (Array.from(node.classList).includes("xiaobai-window-resize")) {
+        if (Array.from(node.classList).includes("xiaobai-window-wrapper")) {
           setTopWindow(node.id);
           break;
         }
@@ -118,6 +152,9 @@ export default defineComponent({
       });
 
       const obj = windows.value[windowIdx];
+
+      // disabled animation
+      obj.animation = false;
 
       // save init point
       var _initPoint = {
@@ -209,6 +246,7 @@ export default defineComponent({
           document.removeEventListener("dragstart", preventDefault);
           document.removeEventListener("mousemove", mousemove);
           document.removeEventListener("mouseup", mouseup);
+          obj.animation = true;
         }
 
         document.addEventListener("mouseup", mouseup);
@@ -219,7 +257,7 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.xiaobai-window-resize {
+.xiaobai-window-wrapper {
   background: #fff;
   border-radius: 1em;
   overflow: hidden;
@@ -230,6 +268,9 @@ export default defineComponent({
   &.xiaobaiWindowActive {
     z-index: 9999999;
     box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.6);
+  }
+  &.animation {
+    transition: all 0.2s;
   }
   > .xiaobai-window-content {
     flex: 1 1 0;

@@ -42,7 +42,7 @@ export default defineComponent({
   top: 0;
   bottom: 0;
   width: v-bind(taskbarWidthForPx);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 9999999999;
   display: flex;
   flex-direction: column;
