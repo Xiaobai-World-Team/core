@@ -1,6 +1,5 @@
 import { ref } from "@vue/reactivity";
 
-
 /** 
  * on desktop have mutiple windows, every window has below "IWindow interface",
  * each window be the body's directly child
@@ -13,6 +12,7 @@ interface IWindow {
   width: number
   height: number
   active: boolean
+  visible: boolean
   icon: string
 }
 
@@ -31,6 +31,7 @@ windows.value.push({
   height: 300,
   active: false,
   title: "Calculator",
+  visible: true,
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/calculator.svg'
 })
 
@@ -41,6 +42,7 @@ windows.value.push({
   width: 500,
   height: 200,
   active: false,
+  visible: true,
   title: "Notepad",
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg'
 })

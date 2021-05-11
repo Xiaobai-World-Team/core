@@ -79,7 +79,6 @@ body {
 #xiaobai-world-root {
   width: 100vw;
   height: 100vh;
-  border: solid 12px rgb(0, 182, 167);
   box-sizing: border-box;
   display: flex;
 }

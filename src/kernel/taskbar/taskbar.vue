@@ -2,28 +2,34 @@
   <div id="xiaobai-world-taskbar">
     <div
       class="xiaobai-world-taskbar-app"
-      v-for="window in windows"
+      v-for="(window, idx) in windows"
       :key="window.id"
       :class="{ xiaobaiTaskbarAppActive: activeWindowsId === window.id }"
-      @click="activeWindowsId = window.id"
+      @click="showWindow(idx)"
     >
       <div class="xiaobai-world-taskbar-app-item">
         <img :src="window.icon" />
-        <!-- <span>{{ window.title }}</span> -->
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts">
+import { computed, defineComponent } from "@vue/runtime-core";
 import { activeWindowsId, windows } from "../windows/windows";
+import { taskbarWidthForPx } from "../const";
 
 export default defineComponent({
   setup() {
+    function showWindow(idx: number) {
+      activeWindowsId.value = windows.value[idx].id;
+      windows.value[idx].visible = true;
+    }
     return {
+      showWindow,
       windows,
       activeWindowsId,
+      taskbarWidthForPx,
     };
   },
 });
@@ -32,15 +38,16 @@ export default defineComponent({
 <style lang="less">
 #xiaobai-world-taskbar {
   position: fixed;
-  left: 50%;
-  bottom: 1.5em;
-  height: 70px;
-  background: rgba(0, 0, 0, 0.1);
-  transform: translateX(-50%);
-  padding: 0 1em;
-  border-radius: 12px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: v-bind(taskbarWidthForPx);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 9999999999;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
   > .xiaobai-world-taskbar-app {
     display: flex;
     align-items: center;
@@ -59,11 +66,13 @@ export default defineComponent({
       flex-direction: column;
       align-items: center;
       background: #fff;
-      margin: 0 8px;
+      margin: 8px 0;
       padding: 6px;
       border-radius: 6px;
       transition: all 0.2s;
       img {
+        min-width: 35px;
+        min-height: 35px;
         max-width: 35px;
         max-height: 35px;
         transition: all 0.1s;

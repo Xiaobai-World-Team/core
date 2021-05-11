@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { taskbarWidthForPx } from "../const";
 import { activeWindowsId } from "../windows/windows";
 
 /** user file */
@@ -37,6 +38,7 @@ export default defineComponent({
   setup() {
     return {
       activeWindowsId,
+      taskbarWidthForPx,
     };
   },
 });
@@ -46,5 +48,6 @@ export default defineComponent({
 .xiaobai-world-desktop {
   height: 100%;
   box-sizing: border-box;
+  margin-left: v-bind(taskbarWidthForPx);
 }
 </style>
