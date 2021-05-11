@@ -1,6 +1,6 @@
 <template>
   <div
-    v-for="(window, idx) in windows"
+    v-for="window in windows"
     :id="window.id"
     :key="window.id"
     class="xiaobai-window-wrapper"
@@ -103,9 +103,9 @@ export default defineComponent({
     }
 
     /**
-     * Switch windows size when dobule clicking title bar
+     * set top window
      */
-    document.addEventListener("dbclick", (ev) => {
+    document.addEventListener("mousedown", (ev) => {
       let node = <Element>ev.target;
       if (node instanceof Element === false) {
         return;
