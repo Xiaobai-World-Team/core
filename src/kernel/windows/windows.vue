@@ -218,6 +218,12 @@ export default defineComponent({
             case "move":
               obj.x = point.startX + (ev.pageX - initX);
               obj.y = point.startY + (ev.pageY - initY);
+              if (obj.x <= taskbarWidth.value) {
+                obj.x = taskbarWidth.value;
+              }
+              if (obj.y <= 0) {
+                obj.y = 0;
+              }
               return;
           }
 
