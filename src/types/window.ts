@@ -1,4 +1,5 @@
 import { IContextMenuItem } from "../kernel/context-menus/types";
+import { XiaobaiFileSystem } from "../kernel/file-system/file-system";
 
 Object.defineProperty(window, 'xiaobaiApi', { value: {} })
 declare global {
@@ -36,4 +37,5 @@ export interface IWindow {
 export interface IXiaobaiApi {
   /* Show Popup Menu */
   TrackPopupMenu(menus: IContextMenuItem[]): void
+  FileSystem: XiaobaiFileSystem
 }
