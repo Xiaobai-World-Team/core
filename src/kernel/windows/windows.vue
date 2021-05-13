@@ -23,6 +23,7 @@
 
     <div
       xiaobai-resize-trigger="move"
+      @contextmenu="toolbarContextMenu(window.id)"
       @dblclick="max(window.id)"
       class="xiaobai-window-toolbar"
     >
@@ -46,7 +47,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { taskbarWidth } from "../const";
+import {
+  DESKTOP_CONTEXT_MENU,
+  taskbarWidth,
+  WINDOW_TOOLBAR_CONTEXT_MENU,
+} from "../const";
 import { activeWindowsId, windows } from "./windows";
 
 export default defineComponent({
@@ -85,10 +90,40 @@ export default defineComponent({
       obj.width = window.innerWidth - taskbarWidth.value;
       obj.height = window.innerHeight;
     }
+
+    function toolbarContextMenu(id: string) {
+      window.xiaobaiApi.TrackPopupMenu([
+        {
+          id: WINDOW_TOOLBAR_CONTEXT_MENU.CLOSE_WINDOW,
+          text: "Close Window",
+          disable: true,
+          callback: () => {
+            close(id);
+          },
+        },
+        {
+          id: WINDOW_TOOLBAR_CONTEXT_MENU.MAX,
+          text: "max",
+          disable: true,
+          callback() {
+            max(id);
+          },
+        },
+        {
+          id: WINDOW_TOOLBAR_CONTEXT_MENU.MIN,
+          text: "min",
+          disable: true,
+          callback() {
+            min(id);
+          },
+        },
+      ]);
+    }
     return {
       close,
       min,
       max,
+      toolbarContextMenu,
       windows,
       activeWindowsId,
     };
@@ -116,6 +151,9 @@ export default defineComponent({
       }
       while (node !== null) {
         node = <Element>node.parentNode;
+        if (!node) {
+          break;
+        }
         if (node.nodeName === "BODY") {
           break;
         }

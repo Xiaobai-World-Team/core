@@ -2,6 +2,8 @@
  * Right-click menu item
  */
 export interface IContextMenuItem {
+  /** union id */
+  id: string;
   /** Make button gray */
   disable: boolean;
   /** Button icon */
@@ -13,7 +15,7 @@ export interface IContextMenuItem {
    */
   describe?: string;
   /** callback */
-  callback(): any;
+  callback(event: IContextMenuItem): any;
   /** sub menu  */
   child?: IContextMenuItem[],
 }

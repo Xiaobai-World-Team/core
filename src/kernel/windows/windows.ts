@@ -31,6 +31,9 @@ export const windows = ref<IWindow[]>([])
  */
 export const activeWindowsId = ref('')
 
+/**
+ * The Z-index step value of each window is 1000
+ */
 windows.value.push({
   id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
   x: 100,

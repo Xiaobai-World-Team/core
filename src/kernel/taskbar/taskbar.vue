@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "@vue/runtime-core";
 import { activeWindowsId, windows } from "../windows/windows";
 import { taskbarWidthForPx } from "../const";
 

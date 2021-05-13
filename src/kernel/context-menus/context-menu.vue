@@ -30,15 +30,37 @@ export default {
   },
   methods: {
     contextMenuItemClick(item: IContextMenuItem) {
-      item.callback();
+      item.callback(item);
     },
   },
   mounted() {
-    document.addEventListener("click", (event) => {
+    /**
+     * avoid hiding menus whe tou press the mouse over them
+     */
+    document.addEventListener("mousedown", (event: MouseEvent) => {
       if (!this.$el) {
         return;
       }
+      const target = event.target;
+      if (target === null) {
+        return;
+      }
+      if ((<Element>this.$el).contains(<Element>target)) {
+        return;
+      }
       contextMenus.value.visible = false;
+    });
+    /**
+     * when click on a menu item,hide the menu
+     */
+    document.addEventListener("click", (event: MouseEvent) => {
+      const target = event.target;
+      if (target === null) {
+        return;
+      }
+      if ((<Element>this.$el).contains(<Element>target)) {
+        contextMenus.value.visible = false;
+      }
     });
   },
 };
@@ -47,11 +69,12 @@ export default {
 <style lang="less">
 #xiaobai-context-menu {
   position: fixed;
-  z-index: 99999;
+  z-index: 9999999999;
   background: #f2f2f2;
   padding: 3px 0;
   box-shadow: 0 0 0 1px #aaa;
   border-radius: 2px;
+  user-select: none;
   ul,
   li {
     list-style: none;

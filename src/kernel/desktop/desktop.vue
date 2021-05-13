@@ -1,10 +1,10 @@
 <template>
-  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''">desktop</div>
+  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { taskbarWidthForPx } from "../const";
+import { DESKTOP_CONTEXT_MENU, taskbarWidthForPx } from "../const";
 import { activeWindowsId } from "../windows/windows";
 
 /** user file */
@@ -40,6 +40,29 @@ export default defineComponent({
       activeWindowsId,
       taskbarWidthForPx,
     };
+  },
+  mounted() {
+    this.$el.addEventListener("contextmenu", (event: MouseEvent) => {
+      event.preventDefault();
+      window.xiaobaiApi.TrackPopupMenu([
+        {
+          id: DESKTOP_CONTEXT_MENU.NEW_FOLDER,
+          text: "Create Folder",
+          disable: true,
+          callback(ab) {
+            console.log(ab);
+          },
+        },
+        {
+          id: DESKTOP_CONTEXT_MENU.CREATE_TXT,
+          text: "Create Text File",
+          disable: true,
+          callback(ab) {
+            console.log(ab);
+          },
+        },
+      ]);
+    });
   },
 });
 </script>
