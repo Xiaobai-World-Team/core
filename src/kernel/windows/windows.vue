@@ -30,7 +30,11 @@
       <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
       {{ window.title }}
     </div>
-    <div xiaobai-resize-trigger="move" @dblclick="max(window.id)">
+    <div
+      xiaobai-resize-trigger="move"
+      @contextmenu="toolbarContextMenu(window.id)"
+      @dblclick="max(window.id)"
+    >
       <div class="close" title="Close" @click="close(window.id)"></div>
       <div class="min" title="Min" @click="min(window.id)"></div>
       <div class="max" title="Max" @click="max(window.id)"></div>
