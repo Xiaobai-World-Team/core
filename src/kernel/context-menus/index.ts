@@ -13,9 +13,10 @@ export const contextMenus = ref<IContextMenu>({
 
 document.addEventListener('contextmenu', (event) => {
   event.preventDefault()
+  document.title = Math.random().toString()
   contextMenus.value.x = event.pageX;
   contextMenus.value.y = event.pageY;
-});
+}, { capture: true });
 
 window.xiaobaiApi.TrackPopupMenu = function (menus: IContextMenuItem[]) {
   contextMenus.value.menus = menus

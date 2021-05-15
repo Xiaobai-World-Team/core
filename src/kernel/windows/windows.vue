@@ -17,289 +17,33 @@
       height: window.height + 'px',
     }"
   >
-    <div class="xiaobai-window-content">
+    <div class="xiaobai-window-content" id="root">
       <pre>{{ window }}</pre>
     </div>
-
-    <div
-      xiaobai-resize-trigger="move"
-      @contextmenu="toolbarContextMenu(window.id)"
-      @dblclick="max(window.id)"
-      class="xiaobai-window-toolbar"
-    >
-      <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
-      {{ window.title }}
-    </div>
-    <div
-      xiaobai-resize-trigger="move"
-      @contextmenu="toolbarContextMenu(window.id)"
-      @dblclick="max(window.id)"
-    >
-      <div class="close" title="Close" @click="close(window.id)"></div>
-      <div class="min" title="Min" @click="min(window.id)"></div>
-      <div class="max" title="Max" @click="max(window.id)"></div>
-    </div>
-    <div xiaobai-resize-trigger="e"></div>
-    <div xiaobai-resize-trigger="s"></div>
-    <div xiaobai-resize-trigger="w"></div>
-    <div xiaobai-resize-trigger="n"></div>
-    <div xiaobai-resize-trigger="ne"></div>
-    <div xiaobai-resize-trigger="nw"></div>
-    <div xiaobai-resize-trigger="sw"></div>
-    <div xiaobai-resize-trigger="se"></div>
+    <windowsHandler :window="window" />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  DESKTOP_CONTEXT_MENU,
-  taskbarWidth,
-  WINDOW_TOOLBAR_CONTEXT_MENU,
-} from "../const";
+import windowsHandler from "./window-handler.vue";
 import { activeWindowsId, windows } from "./windows";
 
 export default defineComponent({
   setup() {
-    function close(id: string) {
-      const idx = windows.value.findIndex((window) => window.id === id);
-      windows.value.splice(idx, 1);
-    }
-    function min(id: string) {
-      const idx = windows.value.findIndex((window) => window.id === id);
-      windows.value[idx].visible = false;
-    }
-    function max(id: string) {
-      const idx = windows.value.findIndex((window) => window.id === id);
-      const obj = windows.value[idx];
-
-      if (obj.previousWindowSize) {
-        obj.x = obj.previousWindowSize.x;
-        obj.y = obj.previousWindowSize.y;
-        obj.width = obj.previousWindowSize.width;
-        obj.height = obj.previousWindowSize.height;
-        obj.previousWindowSize = undefined;
-        return;
-      }
-
-      // first save the window size
-      obj.previousWindowSize = {
-        x: obj.x,
-        y: obj.y,
-        width: obj.width,
-        height: obj.height,
-      };
-
-      obj.x = taskbarWidth.value;
-      obj.y = 0;
-      obj.width = window.innerWidth - taskbarWidth.value;
-      obj.height = window.innerHeight;
-    }
-
-    function toolbarContextMenu(id: string) {
-      window.xiaobaiApi.TrackPopupMenu([
-        {
-          id: WINDOW_TOOLBAR_CONTEXT_MENU.CLOSE_WINDOW,
-          text: "Close Window",
-          disable: true,
-          callback: () => {
-            close(id);
-          },
-        },
-        {
-          id: WINDOW_TOOLBAR_CONTEXT_MENU.MAX,
-          text: "max",
-          disable: true,
-          callback() {
-            max(id);
-          },
-        },
-        {
-          id: WINDOW_TOOLBAR_CONTEXT_MENU.MIN,
-          text: "min",
-          disable: true,
-          callback() {
-            min(id);
-          },
-        },
-      ]);
-    }
     return {
-      close,
-      min,
-      max,
-      toolbarContextMenu,
       windows,
-      activeWindowsId,
+      activeWindowsId
     };
   },
+  components: {
+    windowsHandler,
+  },
   mounted() {
-    function preventDefault(ev: Event) {
-      ev.preventDefault();
-    }
-
-    function setTopWindow(id: string) {
-      activeWindowsId.value = id;
-    }
-
-    /**
-     * set top window
-     */
-    document.addEventListener("mousedown", (ev) => {
-      let node = <Element>ev.target;
-      if (node instanceof Element === false) {
-        return;
-      }
-      if (Array.from(node.classList).includes("xiaobai-window-wrapper")) {
-        setTopWindow(node.id);
-        return;
-      }
-      while (node !== null) {
-        node = <Element>node.parentNode;
-        if (!node) {
-          break;
-        }
-        if (node.nodeName === "BODY") {
-          break;
-        }
-        if (Array.from(node.classList).includes("xiaobai-window-wrapper")) {
-          setTopWindow(node.id);
-          break;
-        }
-      }
-    });
-
-    /**
-     * resize and scale
-     */
-    document.addEventListener("mousedown", function (ev) {
-      if (ev.target === null) {
-        return;
-      }
-
-      const target: HTMLDivElement = <HTMLDivElement>ev.target;
-      const action = target.getAttribute("xiaobai-resize-trigger");
-
-      if (action === null) {
-        return;
-      }
-
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const parent = <HTMLDivElement>target.parentNode;
-      const id = parent.id;
-
-      const windowIdx = windows.value.findIndex((item) => {
-        return item.id === id;
-      });
-
-      const obj = windows.value[windowIdx];
-
-      // disabled animation
-      obj.animation = false;
-
-      // save init point
-      var _initPoint = {
-        left: obj.x,
-        top: obj.y,
-        width: obj.width,
-        height: obj.height,
-      };
-
-      var initX = ev.pageX;
-      var initY = ev.pageY;
-      var startX = _initPoint.left;
-      var startY = _initPoint.top;
-      var endX = _initPoint.left + _initPoint.width;
-      var endY = _initPoint.top + _initPoint.height;
-
-      bind();
-
-      function bind() {
-        document.addEventListener("selectstart", preventDefault);
-        document.addEventListener("dragstart", preventDefault);
-
-        // save coordinates during movement
-        var point = {
-          startX: _initPoint.left,
-          startY: _initPoint.top,
-          endX: endX,
-          endY: endY,
-        };
-
-        function mousemove(ev: MouseEvent) {
-          switch (action) {
-            case "e":
-              point.endX = endX + (ev.pageX - initX);
-              break;
-            case "s":
-              point.endY = endY + (ev.pageY - initY);
-              break;
-            case "w":
-              point.startX = startX - (initX - ev.pageX);
-              break;
-            case "n":
-              point.startY = startY - (initY - ev.pageY);
-              break;
-            case "nw":
-              point.startX = startX - (initX - ev.pageX);
-              point.startY = startY - (initY - ev.pageY);
-              break;
-            case "sw":
-              point.startX = startX - (initX - ev.pageX);
-              point.endY = endY + (ev.pageY - initY);
-              break;
-            case "se":
-              point.endX = endX + (ev.pageX - initX);
-              point.endY = endY + (ev.pageY - initY);
-              break;
-            case "ne":
-              point.endX = endX + (ev.pageX - initX);
-              point.startY = startY - (initY - ev.pageY);
-              break;
-            case "move":
-              obj.x = point.startX + (ev.pageX - initX);
-              obj.y = point.startY + (ev.pageY - initY);
-              if (obj.x <= taskbarWidth.value) {
-                obj.x = taskbarWidth.value;
-              }
-              if (obj.y <= 0) {
-                obj.y = 0;
-              }
-              return;
-          }
-
-          var newPoint = {
-            left: point.startX < point.endX ? point.startX : point.endX,
-            top: point.startY < point.endY ? point.startY : point.endY,
-            width:
-              point.startX < point.endX
-                ? point.endX - point.startX
-                : point.startX - point.endX,
-            height:
-              point.startY < point.endY
-                ? point.endY - point.startY
-                : point.startY - point.endY,
-          };
-
-          obj.x = newPoint.left;
-          obj.y = newPoint.top;
-          obj.width = newPoint.width;
-          obj.height = newPoint.height;
-        }
-        document.addEventListener("mousemove", mousemove);
-
-        function mouseup() {
-          document.removeEventListener("selectstart", preventDefault);
-          document.removeEventListener("dragstart", preventDefault);
-          document.removeEventListener("mousemove", mousemove);
-          document.removeEventListener("mouseup", mouseup);
-          obj.animation = true;
-        }
-
-        document.addEventListener("mouseup", mouseup);
-      }
-    });
+    const script = document.createElement("script");
+    script.type = "module";
+    script.setAttribute("crossorigin", "");
+    script.src = "/assets/index.428aea8c.js";
+    document.body.appendChild(script);
   },
 });
 </script>

@@ -1,5 +1,7 @@
 <template>
-  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''"></div>
+  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''">
+    
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,7 +38,19 @@ export default defineComponent({
     },
   },
   setup() {
+    function showFileMenu(event: MouseEvent) {
+      event.stopPropagation();
+      window.xiaobaiApi.TrackPopupMenu([
+        {
+          id: "xx",
+          text: "打开应用",
+          disable: true,
+          callback: () => {},
+        },
+      ]);
+    }
     return {
+      showFileMenu,
       activeWindowsId,
       taskbarWidthForPx,
     };

@@ -1,8 +1,13 @@
+/**
+ * virtual disk api;
+ * avoid some users using cloud disk,because the priceis hard to bear. so matain target is save of small size file.
+ */
+
 
 import axios from 'axios'
 
 /**
- * File System
+ * file system
  */
 export class XiaobaiFileSystem {
   /** read dir file list */

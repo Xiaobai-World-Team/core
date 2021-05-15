@@ -4,7 +4,7 @@ import { ref } from "@vue/reactivity";
  * on desktop have mutiple windows, every window has below "IWindow interface",
  * each window be the body's directly child
  * */
-interface IWindow {
+export interface IWindow {
   title: string,
   id: string;
   x: number
@@ -30,6 +30,13 @@ export const windows = ref<IWindow[]>([])
  * at all times, only one window has actived, and it's the top window
  */
 export const activeWindowsId = ref('')
+
+/**
+ * like operation system,
+ * xiaobai also need "boot loader" to create window instance.
+ */
+
+
 
 /**
  * The Z-index step value of each window is 1000
