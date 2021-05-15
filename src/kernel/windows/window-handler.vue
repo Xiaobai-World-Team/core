@@ -6,7 +6,7 @@
     class="xiaobai-window-toolbar"
   >
     <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
-    {{ window.title }}
+    {{ window.title }} {{window.isUsed}}
   </div>
   <div
     xiaobai-resize-trigger="move"

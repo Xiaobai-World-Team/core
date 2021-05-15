@@ -17,15 +17,14 @@
       height: window.height + 'px',
     }"
   >
-    <div class="xiaobai-window-content" id="root">
-      <pre>{{ window }}</pre>
-    </div>
+    <windowContent :window="window" />
     <windowsHandler :window="window" />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import windowsHandler from "./window-handler.vue";
+import windowContent from "./window-content.vue";
 import { activeWindowsId, windows } from "./windows";
 
 export default defineComponent({
@@ -37,13 +36,7 @@ export default defineComponent({
   },
   components: {
     windowsHandler,
-  },
-  mounted() {
-    const script = document.createElement("script");
-    script.type = "module";
-    script.setAttribute("crossorigin", "");
-    script.src = "/assets/index.428aea8c.js";
-    document.body.appendChild(script);
+    windowContent,
   },
 });
 </script>
@@ -64,7 +57,7 @@ export default defineComponent({
   &.animation {
     transition: all 0.2s;
   }
-  > .xiaobai-window-content {
+  > .xiaobai-world-window-content {
     flex: 1 1 0;
     overflow: auto;
   }
