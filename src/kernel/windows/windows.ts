@@ -31,7 +31,9 @@ export interface IWindow {
     height: number
   },
   /** whether the window has been consumed */
-  isUsed: boolean
+  isUsed: boolean,
+  /** auto start? */
+  autoStart: boolean
 }
 
 export const windows = ref<IWindow[]>([])
@@ -89,7 +91,8 @@ windows.value.push({
   visible: true,
   animation: true,
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/calculator.svg',
-  isUsed: false
+  isUsed: false,
+  autoStart: false
 })
 
 windows.value.push({
@@ -104,7 +107,8 @@ windows.value.push({
   animation: true,
   title: "Notepad",
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false
+  isUsed: false,
+  autoStart: false
 })
 
 windows.value.push({
@@ -119,7 +123,8 @@ windows.value.push({
   animation: true,
   title: "Notepad",
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false
+  isUsed: false,
+  autoStart: false
 })
 
 windows.value.push({
@@ -134,5 +139,6 @@ windows.value.push({
   animation: true,
   title: "Notepad",
   icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false
+  isUsed: false,
+  autoStart: false
 })
