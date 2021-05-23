@@ -30,8 +30,7 @@ export default defineComponent({
       this.window.isUsed = true;
     });
     observer.observe(<Element>this.$refs.content, { childList: true });
-    loadScript("/assets/index.3b27ab68.js").then(() => {
-      console.log(Date.now())
+    loadScript("/store/app/user/5274729adf7a7a8b7ccdeeea8/e92ad02be7600ddbb15bf3413b9f6181c7456c5be2e75861bce0eeb99884060b/assets/index.835a2cef.js").then(() => {
       window.postMessage(
         {
           XIAOBAI_EVENT: "XIAOBAI_APP_JAVASCRIPT_ENTRY_LOADED",
