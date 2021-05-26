@@ -33,7 +33,9 @@ export interface IWindow {
   /** whether the window has been consumed */
   isUsed: boolean,
   /** auto start? */
-  autoStart: boolean
+  autoStart: boolean,
+  jsEntry: string,
+  css: string[]
 }
 
 export const windows = ref<IWindow[]>([])
@@ -75,70 +77,3 @@ export const loadScript = function (scriptUrl: string) {
     queue?.push(() => resolve())
   })
 }
-
-/**
- * The Z-index step value of each window is 1000
- */
-windows.value.push({
-  id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
-  appName: 'reactDemo',
-  x: 100,
-  y: 30,
-  width: 300,
-  height: 300,
-  active: false,
-  title: "Calculator",
-  visible: true,
-  animation: true,
-  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/calculator.svg',
-  isUsed: false,
-  autoStart: false
-})
-
-windows.value.push({
-  id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
-  appName: 'reactDemo',
-  x: 550,
-  y: 220,
-  width: 500,
-  height: 300,
-  active: false,
-  visible: true,
-  animation: true,
-  title: "Notepad",
-  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false,
-  autoStart: false
-})
-
-windows.value.push({
-  id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
-  appName: 'reactDemo',
-  x: 600,
-  y: 100,
-  width: 500,
-  height: 300,
-  active: false,
-  visible: true,
-  animation: true,
-  title: "Notepad",
-  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false,
-  autoStart: false
-})
-
-windows.value.push({
-  id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
-  appName: 'reactDemo',
-  x: 300,
-  y: 100,
-  width: 500,
-  height: 300,
-  active: false,
-  visible: true,
-  animation: true,
-  title: "Notepad",
-  icon: 'https://xiaobai-world.oss-cn-hangzhou.aliyuncs.com/application/app-icon/48icon_Notepad.svg',
-  isUsed: false,
-  autoStart: false
-})
