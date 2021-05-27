@@ -4,7 +4,7 @@
   app-name="reactDemo"
   ref="content"
   :class="{ 'xiaobai-world-unused-window': window.isUsed === false }"
-  :window-id="window.id"
+  :id="window.mountPointId"
  ></div>
 </template>
 
@@ -13,7 +13,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "@vue/runtime-core";
-import { IWindow, loadScript } from "./windows";
+import { IWindow } from "@xiaobai-world/api";
+import { loadScript } from "./windows";
 
 export default defineComponent({
  props: {
@@ -44,10 +45,11 @@ export default defineComponent({
   });
 
   loadScript(this.window.jsEntry).then(() => {
+   console.log("发送消息", this.window.mountPointId);
    window.postMessage(
     {
      XIAOBAI_EVENT: "XIAOBAI_APP_JAVASCRIPT_ENTRY_LOADED",
-     id: this.window.id,
+     id: this.window.mountPointId,
      appName: this.window.appName,
      title: this.window.title,
     },

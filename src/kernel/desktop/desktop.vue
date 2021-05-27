@@ -43,8 +43,12 @@ export default defineComponent({
   const appList = ref<IApp[]>([]);
 
   function openApp(app: IApp) {
+   const id = `xiaobai-window-${
+    Date.now().toString(36) + Math.random().toString(36).substring(2, 20)
+   }`;
    windows.value.push({
-    id: Date.now().toString(36) + Math.random().toString(36).substring(2, 20),
+    id,
+    mountPointId: `${id}-mount-point`,
     appName: app.appName,
     x: (Math.random() * window.screen.width) / 1.8,
     y: (Math.random() * window.screen.height) / 1.8,
