@@ -6,7 +6,7 @@
   class="xiaobai-window-toolbar"
  >
   <img class="xiaobai-window-toolbar-icon" :src="window.icon" />
-  {{ window.title }} {{ window.isUsed }}
+  {{ window.title }}
  </div>
  <div
   xiaobai-resize-trigger="move"
@@ -31,7 +31,8 @@
 import "./window-lisentener";
 import { defineComponent, PropType } from "vue";
 import { taskbarWidth, WINDOW_TOOLBAR_CONTEXT_MENU } from "../const";
-import { activeWindowsId, windows, IWindow } from "./windows";
+import { activeWindowsId, windows } from "./windows";
+import { IWindow } from "@xiaobai-world/api";
 
 export default defineComponent({
  props: {

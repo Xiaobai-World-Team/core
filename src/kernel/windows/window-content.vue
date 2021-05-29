@@ -1,7 +1,7 @@
 <template>
  <div
   class="xiaobai-world-window-content"
-  app-name="reactDemo"
+  :app-name="window.appName"
   ref="content"
   :class="{ 'xiaobai-world-unused-window': window.isUsed === false }"
   :id="window.mountPointId"
@@ -45,7 +45,6 @@ export default defineComponent({
   });
 
   loadScript(this.window.jsEntry).then(() => {
-   console.log("发送消息", this.window.mountPointId);
    window.postMessage(
     {
      XIAOBAI_EVENT: "XIAOBAI_APP_JAVASCRIPT_ENTRY_LOADED",
