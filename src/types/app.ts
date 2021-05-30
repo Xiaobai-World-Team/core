@@ -5,8 +5,10 @@ export enum AppStatus {
 }
 
 export interface IApp {
- appName: string
- appVersion: string
+ _id: string;
+ name: string
+ version: string
+ title: string
  jsEntry: string
  css: string[]
  favicon: string

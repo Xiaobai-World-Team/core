@@ -44,16 +44,16 @@ export default defineComponent({
  setup() {
   function close(id: string) {
    const idx = windows.value.findIndex((window) => window.id === id);
-   const appName = windows.value[idx].appName;
+   const name = windows.value[idx].name;
    const css = windows.value[idx].css;
    windows.value.splice(idx, 1);
    console.log(
     windows.value,
-    windows.value.some((win) => win.appName === appName)
+    windows.value.some((win) => win.name === name)
    );
 
    if (
-    !windows.value.some((win) => win.appName === appName) ||
+    !windows.value.some((win) => win.name === name) ||
     windows.value.length < 1
    ) {
     console.log("开始移除");

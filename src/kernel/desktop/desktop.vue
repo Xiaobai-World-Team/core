@@ -2,13 +2,13 @@
  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''">
   <div class="app" v-for="app in appList" @click="openApp(app)" :key="app._id">
    <img :src="app.favicon" />
-   <span>{{ app.appName }}</span>
+   <span>{{ app.name }}</span>
   </div>
  </div>
 </template>
 
 <script lang="ts">
-import { App, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { DESKTOP_CONTEXT_MENU, taskbarWidthForPx } from "../const";
 import { IApp } from "../../types/app";
 import { activeWindowsId, windows } from "../windows/windows";
@@ -23,7 +23,7 @@ interface IUserFile {
 export default defineComponent({
  props: {
   order: {
-   type: Object as PropType<File>,
+   type: String,
    required: true,
   },
  },
@@ -49,13 +49,13 @@ export default defineComponent({
    windows.value.push({
     id,
     mountPointId: `${id}-mount-point`,
-    appName: app.appName,
+    name: app.name,
     x: (Math.random() * window.screen.width) / 1.8,
     y: (Math.random() * window.screen.height) / 1.8,
     width: 300,
     height: 300,
     active: false,
-    title: app.appName,
+    title: app.title,
     visible: true,
     animation: true,
     icon: app.favicon,

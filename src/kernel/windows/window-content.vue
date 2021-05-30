@@ -1,7 +1,7 @@
 <template>
  <div
   class="xiaobai-world-window-content"
-  :app-name="window.appName"
+  :name="window.name"
   ref="content"
   :class="{ 'xiaobai-world-unused-window': window.isUsed === false }"
   :id="window.mountPointId"
@@ -49,7 +49,7 @@ export default defineComponent({
     {
      XIAOBAI_EVENT: "XIAOBAI_APP_JAVASCRIPT_ENTRY_LOADED",
      id: this.window.mountPointId,
-     appName: this.window.appName,
+     name: this.window.name,
      title: this.window.title,
     },
     "*"
