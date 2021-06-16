@@ -1,5 +1,6 @@
 import { ref } from "@vue/reactivity";
-import { IWindow } from '@xiaobai-world/api'
+import { login } from '@xiaobai-world/api'
+import { IWindow } from "@xiaobai-world/api/src/types";
 
 export const windows = ref<IWindow[]>([])
 
@@ -40,3 +41,7 @@ export const loadScript = function (scriptUrl: string) {
     queue?.push(() => resolve())
   })
 }
+
+login().then(res => {
+  console.log(res)
+})
