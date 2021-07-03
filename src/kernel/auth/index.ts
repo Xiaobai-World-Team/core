@@ -11,8 +11,8 @@ export const userInfo = readonly(user)
 
 /** get user info */
 async function getUserInfo() {
-  const res = await request.get('/api')
-  if (res.data.user) {
+  const res = await request.get('/user/info')
+  if (res.data.email) {
     user.value = res.data
   }
 }

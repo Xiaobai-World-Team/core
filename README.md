@@ -1,4 +1,6 @@
-# browser-based operating system
+# 陪伴您终身的伙伴
+
+everything need for you.
 
 ### Get Started
 
