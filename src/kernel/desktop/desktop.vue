@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { DESKTOP_CONTEXT_MENU, taskbarWidthForPx } from "../const";
 import { IApp } from "../../types/app";
 import { activeWindowsId, windows } from "../windows/windows";

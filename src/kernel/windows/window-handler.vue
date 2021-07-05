@@ -32,7 +32,7 @@ import "./window-lisentener";
 import { defineComponent, PropType } from "vue";
 import { taskbarWidth, WINDOW_TOOLBAR_CONTEXT_MENU } from "../const";
 import { activeWindowsId, windows } from "./windows";
-import { IWindow } from "@xiaobai-world/api";
+import { IWindow } from "@xiaobai-world/api/src/types";
 
 export default defineComponent({
  props: {
