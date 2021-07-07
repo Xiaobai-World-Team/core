@@ -1,7 +1,7 @@
 
 import { ref } from "@vue/reactivity";
 import { XiaobaiFileSystem } from "@xiaobai-world/api";
-import { IContextMenu, IContextMenuItem } from "@xiaobai-world/api";
+import { IContextMenu, IContextMenuItem } from "@xiaobai-world/api/src/types";
 
 
 export const contextMenus = ref<IContextMenu>({

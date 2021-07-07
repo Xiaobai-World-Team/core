@@ -125,10 +125,10 @@ export default defineComponent({
    background: #eeeeee;
   }
   img {
-   min-width: 80px;
-   min-height: 80px;
-   max-width: 80px;
-   max-height: 80px;
+   min-width: 60px;
+   min-height: 60px;
+   max-width: 60px;
+   max-height: 60px;
   }
   span {
    background: #f2f2f2;
@@ -136,6 +136,8 @@ export default defineComponent({
    margin-top: 5px;
    padding: 2px 5px;
    border-radius: 3px;
+   word-break: break-all;
+   font-size: 14px;
   }
  }
 }

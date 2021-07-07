@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { contextMenus } from "./index";
-import { IContextMenuItem } from "@xiaobai-world/api";
+import { IContextMenuItem } from "@xiaobai-world/api/src/types";
 import { onMounted, ref } from "@vue/runtime-core";
 export default {
  setup() {
