@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "@vue/runtime-core";
-import { IWindow } from "@xiaobai-world/api/src/types";
+import { IWindow } from "@xiaobai-world/api";
 import { loadScript } from "./windows";
 
 export default defineComponent({

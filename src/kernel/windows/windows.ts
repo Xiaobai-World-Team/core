@@ -1,6 +1,5 @@
 import { ref } from "@vue/reactivity";
-import { login } from '@xiaobai-world/api'
-import { IWindow } from "@xiaobai-world/api/src/types";
+import { IWindow, login } from "@xiaobai-world/api";
 
 export const windows = ref<IWindow[]>([])
 
