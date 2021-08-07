@@ -48,9 +48,11 @@ export default defineComponent({
    window.postMessage(
     {
      XIAOBAI_EVENT: "XIAOBAI_APP_JAVASCRIPT_ENTRY_LOADED",
-     id: this.window.mountPointId,
+     mountPointId: this.window.mountPointId,
+     windowId: this.window.id,
      name: this.window.name,
      title: this.window.title,
+     appRootPath: this.window.appRootPath,
     },
     "*"
    );

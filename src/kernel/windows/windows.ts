@@ -43,4 +43,6 @@ export const loadScript = function (scriptUrl: string) {
 
 login().then(res => {
   console.log(res)
+}).catch(e => {
+  
 })

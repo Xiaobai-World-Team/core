@@ -63,6 +63,7 @@ export default defineComponent({
     css: app.css,
     isUsed: false,
     autoStart: false,
+    appRootPath: app.appRootPath
    });
   }
 

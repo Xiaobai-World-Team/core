@@ -13,4 +13,5 @@ export interface IApp {
  css: string[]
  favicon: string
  appStatus: AppStatus
+ appRootPath: string
 }
