@@ -1,6 +1,8 @@
-# 陪伴您终身的伙伴
+# Goal
 
-everything need for you.
+1. not installation required
+2. easy share
+3. but, how to make a profit?
 
 ### Get Started
 
