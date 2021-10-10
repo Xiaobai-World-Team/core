@@ -1,9 +1,6 @@
 # Goal
 
-1. not installation required
-2. easy share
-3. but, how to make a profit?
-
+browser is useful and power tool and we need a store based on web applications.
 ### Get Started
 
 ```bash
