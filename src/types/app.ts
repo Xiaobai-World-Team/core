@@ -4,6 +4,9 @@ export enum AppStatus {
  TEST = "TEST"
 }
 
+/**
+ * todo: interface can be merge in "@xiaobai-world/api"?
+ */
 export interface IApp {
  _id: string;
  name: string
