@@ -7,7 +7,7 @@
         "serve": "vite preview"
     },
     "dependencies": {
-        "@xiaobai-world/api": "0.0.26",
+        "@xiaobai-world/api": "0.0.29",
         "axios": "^0.21.1",
         "rxjs": "^7.1.0",
         "vue": "^3.0.5"

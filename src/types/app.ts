@@ -12,6 +12,8 @@ export interface IApp {
  jsEntry: string
  css: string[]
  favicon: string
+ initialWidth: number;
+ initialHeight: number;
  appStatus: AppStatus
  appRootPath: string
 }
