@@ -4,19 +4,26 @@ export enum AppStatus {
  TEST = "TEST"
 }
 
+import { IWindow } from "@xiaobai-world/api";
+import { Assign } from "utility-types";
+
 /**
- * todo: interface can be merge in "@xiaobai-world/api"?
+ * App实例
  */
-export interface IApp {
- _id: string;
- name: string
- version: string
- title: string
- jsEntry: string
- css: string[]
- favicon: string
- initialWidth: number;
- initialHeight: number;
- appStatus: AppStatus
- appRootPath: string
-}
+export type IApp =
+ Assign<
+  Pick<
+   IWindow,
+   'name' |
+   'title' |
+   'jsEntry' |
+   'css' |
+   'icon' |
+   'initialWidth' |
+   'initialHeight' |
+   'appRootPath'
+  >, {
+   _id: string,
+   version: string,
+   appStatus: string
+  }>;

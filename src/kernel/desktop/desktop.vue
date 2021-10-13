@@ -1,7 +1,7 @@
 <template>
  <div class="xiaobai-world-desktop" @click="activeWindowsId = ''">
   <div class="app" v-for="app in appList" @click="openApp(app)" :key="app._id">
-   <img :src="app.favicon" />
+   <img :src="app.icon" />
    <span>{{ app.name }}</span>
   </div>
  </div>
@@ -50,20 +50,21 @@ export default defineComponent({
     id,
     mountPointId: `${id}-mount-point`,
     name: app.name,
+    title: app.title,
     x: Math.random() * (document.body.offsetWidth / 1.5),
     y: Math.random() * (document.body.offsetHeight / 1.5),
+    initialWidth: app.initialWidth,
+    initialHeight: app.initialHeight,
     width: app.initialWidth,
     height: app.initialHeight,
     active: false,
-    title: app.title,
     visible: true,
     animation: true,
-    icon: app.favicon,
+    icon: app.icon,
     jsEntry: app.jsEntry,
     css: app.css,
     isUsed: false,
-    autoStart: false,
-    appRootPath: app.appRootPath
+    appRootPath: app.appRootPath,
    });
   }
 
